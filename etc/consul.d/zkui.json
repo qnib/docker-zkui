@@ -1,0 +1,14 @@
+{
+  "services": [
+    {
+        "id": "zkui",
+        "name": "zkui",
+        "tags": [],
+        "port": 9090,
+        "checks": [{
+            "script": "echo 'try to curl localhost:9090' && curl -s localhost:9090",
+            "interval": "10s"
+        }]
+    }
+  ]
+}
