@@ -7,3 +7,4 @@ RUN cd /opt/zkui && mvn clean install
 ADD etc/supervisord.d/zkui* /etc/supervisord.d/
 ADD etc/consul.d/zkui.json /etc/consul.d/
 ADD etc/consul-templates/zkui.conf.ctmpl /etc/consul-templates/
+ADD opt/qnib/zkui/bin/start_zookeeper-update.sh /opt/qnib/zkui/bin/

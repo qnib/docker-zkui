@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ "X${ZK_DC}" != "X" ];then
+    sed -i'' -e "s#service \"zookeeper.*\"#service \"zookeeper@${ZK_DC}\"#" 
+fi
+
+if [ "X${ZK_MIN}" != "X" ];then
+    ZK_CNT=0
+    while [ ${ZK_CNT} -ne ${ZK_MIN} ];do
+        ZK_CNT=$(curl -Ls "localhost:8500/v1/catalog/service/zookeeper?dc=${ZK_DC-dc1}"|python -m json.tool|grep -c Node)
+        sleep 5
+    done
+fi 
+
+consul-template -consul localhost:8500 -wait=15s -template "/etc/consul-templates/zkui.conf.ctmpl:/opt/zkui/config.cfg:supervisorctl restart zkui"
