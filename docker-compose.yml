@@ -1,0 +1,40 @@
+consul:
+    image: qnib/consul
+    ports:
+      - "8500:8500"
+    environment:
+     - DC_NAME=qnib
+    dns: 127.0.0.1
+    hostname: consul
+    privileged: true
+
+zkui:
+    hostname: zkui
+    dns: 127.0.0.1
+    dns_search:
+    - node.consul
+    - service.consul
+    image: qnib/zkui
+    environment:
+    - DC_NAME=qnib
+    links:
+    - zookeeper:zookeeper
+    links:
+    - consul:consul
+    ports:
+    - 9090:9090
+    privileged: true
+
+zookeeper:
+    hostname: zookeeper
+    dns: 127.0.0.1
+    dns_search:
+    - node.consul
+    - service.consul
+    image: qnib/zookeeper
+    environment:
+    - DC_NAME=qnib
+    links:
+    - consul:consul
+    privileged: true
+
