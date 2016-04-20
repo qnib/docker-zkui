@@ -1,5 +1,5 @@
 #Server Port
-serverPort=9090
+serverPort={{ env "ZKUI_PORT" }}
 #Comma seperated list of all the zookeeper servers{{$zkserver := env "ZKUI_ZK_SERVER" }}{{ if eq $zkserver ""}}
 zkServer={{ range $i, $e := service "zookeeper" "any" }}{{ if ne $i 0 }},{{ end }}{{ $e.Address }}:{{ $e.Port }}{{ end }}{{ else }}
 zkServer={{ $zkserver }}{{ end }}

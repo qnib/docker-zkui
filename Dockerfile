@@ -10,4 +10,5 @@ ADD etc/consul-templates/zkui.conf.ctmpl /etc/consul-templates/
 ADD opt/qnib/zkui/bin/start_zookeeper-update.sh /opt/qnib/zkui/bin/
 RUN echo "grep zkSer /opt/zkui/config.cfg" >> /root/.bash_history
 ENV ZKUI_ADMIN_PW=admin \
-    ZKUI_USER_PW=user
+    ZKUI_USER_PW=user \
+    ZKUI_PORT=9090
