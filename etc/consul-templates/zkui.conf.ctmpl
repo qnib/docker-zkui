@@ -12,12 +12,13 @@ scmRepoPath=//appconfig.txt
 
 #if set to true then userSet is used for authentication, else ldap authentication is used.
 ldapAuth=false
-ldapDomain=mycompany,mydomain
+#ldapDomain=mycompany,mydomain
 #ldap authentication url. Ignore if using file based authentication.
-ldapUrl=ldap://<ldap_host>:<ldap_port>/dc=mycom,dc=com
+#ldapUrl=ldap://<ldap_host>:<ldap_port>/dc=mycom,dc=com
 #Specific roles for ldap authenticated users. Ignore if using file based authentication.
-ldapRoleSet={"users": [{ "username":"domain\\user1" , "role": "ADMIN" }]}
-userSet = {"users": [{ "username":"admin" , "password":"manager","role": "ADMIN" },{ "username":"appconfig" , "password":"appconfig","role": "USER" }]}
+#ldapRoleSet={"users": [{ "username":"domain\\user1" , "role": "ADMIN" }]}
+##{{ $admpw := env "ZKUI_ADMIN_PW" }}{{ if eq $admpw "" }}{{ $admpw := "manager" }}{{ end }}{{ $usrpw := env "ZKUI_USER_PW" }}{{ if eq $usrpw "" }}{{ $usrpw := "user" }}{{ end }}
+userSet = {"users": [{ "username":"admin" , "password":"{{ env "ZKUI_ADMIN_PW" }}","role": "ADMIN" },{ "username":"user" , "password":"{{ env "ZKUI_USER_PW" }}","role": "USER" }]}
 
 #Set to prod in production and dev in local. Setting to dev will clear history each time.
 env=prod
