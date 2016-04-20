@@ -1,42 +1,47 @@
 consul:
     image: qnib/consul
+    container_name: consul
     ports:
-      - "8500:8500"
+     - "8500:8500"
     environment:
      - DC_NAME=qnib
      - RUN_SERVER=true
      - BOOTSTRAP_CONSUL=true
     dns: 127.0.0.1
-    hostname: consul
     privileged: true
 
 zkui:
     hostname: zkui
+    container_name: zkui
     dns: 127.0.0.1
     dns_search:
-    - node.consul
-    - service.consul
+     - node.consul
+     - service.consul
     image: qnib/zkui
     environment:
-    - DC_NAME=qnib
+     - DC_NAME=qnib
+     # If this variable is set, the ZK servers are set directly, otherwise 
+     # consul will figure it out
+     #- ZKUI_ZK_SERVER=zookeeper.node.consul:2181
     links:
-    - zookeeper:zookeeper
+     - zookeeper:zookeeper
     links:
-    - consul:consul
+     - consul:consul
     ports:
-    - 9090:9090
+     - 9090:9090
     privileged: true
 
 zookeeper:
     hostname: zookeeper
+    container_name: zookeeper
     dns: 127.0.0.1
     dns_search:
-    - node.consul
-    - service.consul
+     - node.consul
+     - service.consul
     image: qnib/zookeeper
     environment:
-    - DC_NAME=qnib
+     - DC_NAME=qnib
     links:
-    - consul:consul
+     - consul:consul
     privileged: true
 

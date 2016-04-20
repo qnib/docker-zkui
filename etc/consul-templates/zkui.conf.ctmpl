@@ -1,11 +1,15 @@
 #Server Port
 serverPort=9090
-#Comma seperated list of all the zookeeper servers
-zkServer={{range $i, $e := service "zookeeper" "any"}}{{if ne $i 0}},{{end}}{{$e.Address}}:{{$e.Port}}{{end}}
+#Comma seperated list of all the zookeeper servers{{$zkserver := env "ZKUI_ZK_SERVER" }}{{ if eq $zkserver ""}}
+zkServer={{ range $i, $e := service "zookeeper" "any" }}{{ if ne $i 0 }},{{ end }}{{ $e.Address }}:{{ $e.Port }}{{ end }}{{ else }}
+zkServer={{ $zkserver }}{{ end }}
+
 #Http path of the repository. Ignore if you dont intent to upload files from repository.
 scmRepo=http://myserver.com/@rev1=
+
 #Path appended to the repo url. Ignore if you dont intent to upload files from repository.
 scmRepoPath=//appconfig.txt
+
 #if set to true then userSet is used for authentication, else ldap authentication is used.
 ldapAuth=false
 ldapDomain=mycompany,mydomain
@@ -14,12 +18,14 @@ ldapUrl=ldap://<ldap_host>:<ldap_port>/dc=mycom,dc=com
 #Specific roles for ldap authenticated users. Ignore if using file based authentication.
 ldapRoleSet={"users": [{ "username":"domain\\user1" , "role": "ADMIN" }]}
 userSet = {"users": [{ "username":"admin" , "password":"manager","role": "ADMIN" },{ "username":"appconfig" , "password":"appconfig","role": "USER" }]}
+
 #Set to prod in production and dev in local. Setting to dev will clear history each time.
 env=prod
 jdbcClass=org.h2.Driver
 jdbcUrl=jdbc:h2:zkui
 jdbcUser=root
 jdbcPwd=manager
+
 #If you want to use mysql db to store history then comment the h2 db section.
 #jdbcClass=com.mysql.jdbc.Driver
 #jdbcUrl=jdbc:mysql://localhost:3306/zkui
@@ -27,7 +33,8 @@ jdbcPwd=manager
 #jdbcPwd=manager
 loginMessage=Please login using admin/manager or appconfig/appconfig.
 #session timeout 5 mins/300 secs.
-sessionTimeout=300
+sessionTimeout=3000
+
 #Default 5 seconds to keep short lived zk sessions. If you have large data then the read will take more than 30 seconds so increase this accordingly. 
 #A bigger zkSessionTimeout means the connection will be held longer and resource consumption will be high.
 zkSessionTimeout=5
