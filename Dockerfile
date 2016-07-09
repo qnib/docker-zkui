@@ -1,12 +1,11 @@
 ###### grafana images
 FROM qnib/alpn-jdk8
 #java8
+ENV MVN_VER=3.3.9
 
 #RUN dnf install -y bsdtar maven && \
-RUN wget http://ftp.fau.de/apache/maven/maven-3/3.3.1/binaries/apache-maven-3.3.1-bin.tar.gz \
- && tar -zxvf apache-maven-3.3.1-bin.tar.gz \
- && rm apache-maven-3.3.1-bin.tar.gz \
- && mv apache-maven-3.3.1 /usr/lib/mvn 
+RUN wget -qO - http://ftp.fau.de/apache/maven/maven-3/${MVN_VER}/binaries/apache-maven-${MVN_VER}-bin.tar.gz | tar xfz - -C /tmp/
+RUN mv /tmp/apache-maven-${MVN_VER} /usr/lib/mvn 
 
 ENV M2_HOME=/usr/lib/mvn \
     M2=/usr/lib/mvn/bin 
