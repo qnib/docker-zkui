@@ -20,9 +20,9 @@ zkui:
     image: qnib/zkui
     environment:
      - DC_NAME=qnib
-     # If this variable is set, the ZK servers are set directly, otherwise 
+     # If this variable is set, the ZK servers are set directly, otherwise
      # consul will figure it out
-     #- ZKUI_ZK_SERVER=zookeeper.node.consul:2181
+     #- ZKUI_ZK_SERVER=zookeeper:2181
     links:
      - zookeeper:zookeeper
     links:
@@ -44,4 +44,3 @@ zookeeper:
     links:
      - consul:consul
     privileged: true
-
