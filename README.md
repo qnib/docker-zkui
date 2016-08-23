@@ -21,7 +21,7 @@ The credentials are
  - `admin/admin` for read/write access, to change the password provide `ZKUI_ADMIN_PW=pass`
  - `user/user` for read-only access, to change the password provide `ZKUI_USER_PW=pass`
 
- *Security considerations*: As the password is part of the inspectable (`docker inspect`) container it is not really a super secure way. If someone has access as admin he can delete stuff... So handle with care... :) 
+ *Security considerations*: As the password is part of the inspectable (`docker inspect`) container it is not really a super secure way. If someone has access as admin he can delete stuff... So handle with care... :)
 
 This will spin 'em up and point the config to the provided ZK cluster.
 

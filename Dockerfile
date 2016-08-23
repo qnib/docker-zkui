@@ -17,3 +17,6 @@ RUN echo "grep zkSer /opt/zkui/config.cfg" >> /root/.bash_history
 ENV ZKUI_ADMIN_PW=admin \
     ZKUI_USER_PW=user \
     ZKUI_PORT=9090
+ADD opt/qnib/zkui/bin/healthcheck.sh /opt/qnib/zkui/bin/
+HEALTHCHECK --interval=2s --retries=300 --timeout=1s \
+ CMD /opt/qnib/zkui/bin/healthcheck.sh
